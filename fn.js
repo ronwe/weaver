@@ -6,8 +6,8 @@ fml.define('core/fn' ,[] , function(){
 		 * return : json string
 		 * source : https://gist.github.com/754454
 		 */
-		if (!JSON){
-			JSON = { 
+		if (!window.JSON){
+			window.JSON = { 
 				stringify : function (obj) {
 					var t = typeof (obj);
 					if (t != "object" || obj === null) {
@@ -34,7 +34,7 @@ fml.define('core/fn' ,[] , function(){
 				}
 			}
 		/*fix prototype*/
-		if (!'trim' in SP) {
+		if (!('trim' in SP)) {
 			String.prototype.trim = function(){
 				return this.replace(/^\s+/g,'').replace(/\s+$/g ,'') ;
 			}
@@ -44,7 +44,7 @@ fml.define('core/fn' ,[] , function(){
 			return Object.prototype.toString.call(param) == "[object "+type+"]";
 			
 			}
-		return {
+		var _export = {
 			is_func : function(func) {
 				return _detectType(func , "Function");
 				},
@@ -104,9 +104,6 @@ fml.define('core/fn' ,[] , function(){
 				return target;
 
 				},
-			map : AP.map?function(list,call){
-				list.map(call);
-				}: this.each,
 			reach : function(list , call){
 				for (var i = list.length-1 ; i>=0 ; i--){
 					if (false === call(list[i],i)) break;
@@ -135,5 +132,10 @@ fml.define('core/fn' ,[] , function(){
 				}
 
 			}	
+
+		_export.map = AP.map?function(list,call){
+				list.map(call);
+				}: _export.each
+		return _export;
 
 });

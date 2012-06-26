@@ -13,11 +13,8 @@ fml.define('core/event',['core/fn','core/data'] , function(require , exports){
 		}else {
 			var fnStack = eventData.getData(elem , type);
 			var fn_id = fn.indexOf(fnStack , fnc);
-			fn.map(fnStack  , function(fn_item , fn_id){
-				if (fnc == fn_item)
-					delete fnStack[fn_id];
-				});
-			}
+			if (fn_id>-1) fnStack.splice(fn_id,1)
+		}
 		
 		}
 	function wrapBind(elem , type , fnc){
@@ -25,10 +22,9 @@ fml.define('core/event',['core/fn','core/data'] , function(require , exports){
 
 		if (0 == fnStack.length) {
 			var callback = function(evt){
-				var self = this;
-				var fnStack = eventData.getData(this , type);
+				//var fnStack = eventData.getData(elem , type);
 				fn.map(fnStack , function(fn_item){
-					fn_item.call(self , evt);
+					fn_item.call(elem , evt);
 					});
 				}
 
@@ -38,11 +34,11 @@ fml.define('core/event',['core/fn','core/data'] , function(require , exports){
 		
 		}	
 	function bind (elem , type , callback){
-			if (elem.addEventListener)
-				elem.addEventListener(type , callback , false);
-			else
-				elem.attachEvent("on" + type, callback);
-			}
+		if (elem.addEventListener)
+			elem.addEventListener(type , callback , false);
+		else
+			elem.attachEvent("on" + type, callback);
+		}
 
 	return {
 		'click' : function(callback){ return this.bind('click' , callback);},
@@ -97,7 +93,7 @@ fml.define('core/event',['core/fn','core/data'] , function(require , exports){
 					wrapEvent(e); 
 					objThis.each(function(ele){
 						if (ele == e.target) {
-							fnc.call(ele);
+							fnc.call(ele,e);
 							return false;
 							}
 						});
@@ -108,7 +104,7 @@ fml.define('core/event',['core/fn','core/data'] , function(require , exports){
 					wrapEvent(e); 
 					if (is(elemExp , e.target)) {
 						objThis.stopPropagation(e);
-						fnc.call(e.target);
+						fnc.call(e.target,e);
 						};
 					
 					});
@@ -136,7 +132,7 @@ fml.define('core/event',['core/fn','core/data'] , function(require , exports){
 			
 			},
 		'stopPropagation': function(evt){
-			if (evt) evt.stopPropagation();
+			if (evt && evt.stopPropagation) evt.stopPropagation();
 			else window.event.cancelBubble = true;
 			}
 		};		
