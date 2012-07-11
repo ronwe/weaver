@@ -1,4 +1,4 @@
-fml.define('core/fn' ,[] , function(){
+fml.define('weave/fn' ,[] , function(){
 		var AP = Array.prototype;
 		var SP = String.prototype;
 		/*
@@ -122,6 +122,13 @@ fml.define('core/fn' ,[] , function(){
 						}	
 					}
 				},
+			forEach : AP.forEach?function(list,call ,scope){
+				  list.forEach(call , scope);
+				}: function(list , call ,scope){
+					var list_len = list.length;
+					for(var i= 0 ;i< list_len;i++)
+						call.call(scope , list[i],i , list)
+				},
 			indexOf : AP.indexOf ? function(arr , arr_search){
 					return arr.indexOf(arr_search);
 				} :function(arr , arr_search){
@@ -130,7 +137,6 @@ fml.define('core/fn' ,[] , function(){
 						}
 					return -1;
 				}
-
 			}	
 
 		_export.map = AP.map?function(list,call){

@@ -1,5 +1,5 @@
-fml.define('core/ajax' ,['core/fn'] , function(require , exports){
-	var fn = require('core/fn')
+fml.define('weave/ajax' ,['weave/fn'] , function(require , exports){
+	var fn = require('weave/fn')
 	var jsonp_callId = new Date
 
 	var newXHR = window.ActiveXObject ? function(){

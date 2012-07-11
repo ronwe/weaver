@@ -1,7 +1,7 @@
-fml.define('core/event',['core/fn','core/data'] , function(require , exports){
+fml.define('weave/event',['weave/fn','weave/data','weave/query'] , function(require , exports){
 
-	var fn = require('core/fn'),
-		eventData = require('core/data'); 
+	var fn = require('weave/fn'),
+		eventData = require('weave/data'); 
 	function wrapEvent(e){
 		if (!e.target) e.target = window.event.srcElement || document;
 		
@@ -81,7 +81,7 @@ fml.define('core/event',['core/fn','core/data'] , function(require , exports){
 			},
 		'on' : function(elemExp , type , fnc){
 			var objThis = this;
-			var is = require('query').judge ;
+			var is = require('weave/query').judge ;
 			var bindFn;
 			
 			if (arguments.length < 3) {

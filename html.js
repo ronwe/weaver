@@ -1,5 +1,5 @@
-fml.define('core/html',['core/fn'],function(require){
-	var fn = require('fn');
+fml.define('weave/html',['weave/fn'],function(require){
+	var fn = require('weave/fn');
 	
 	return {
 		prepend : function(htmle){

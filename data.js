@@ -1,4 +1,4 @@
-fml.define('core/data' ,[] , function(require , exports){
+fml.define('weave/data' ,[] , function(require , exports){
 		var eventData = {},
 			domuid = 1
 

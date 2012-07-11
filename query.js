@@ -1,6 +1,6 @@
-fml.define('core/query',['core/fn'],function(require , exports){
+fml.define('weave/query',['weave/fn'],function(require , exports){
 	var AP = Array.prototype;
-	var fn = require('core/fn');
+	var fn = require('weave/fn');
 	/* #id .class a b a>b 
 	getElementsByClassName *
 	getElementsByTagName *
