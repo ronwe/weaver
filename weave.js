@@ -25,9 +25,9 @@ fml.define('weave/weave', ['weave/query','weave/event' , 'weave/html','weave/pro
 				
 			return _mkStack( stack ,this)
 			}	
-		WP.each = function(call){
+		WP.each = function(fnc){
 			for (var i = 0 ; i < this.length ; i++){
-				if (false === call.call(this,this[i])) break
+				if (false === fnc.call(this,this[i])) break
 				}
 			return this	
 			}
