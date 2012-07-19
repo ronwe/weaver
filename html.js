@@ -40,7 +40,7 @@ fml.define('weave/html',['weave/fn'],function(require){
 			return this;
 			},
 		val : function(v){
-			if (!v) return this.stack.length ? this.stack[0].value : '';
+			if (!v) return this.length ? this[0].value : '';
 			return this.each(function(item){
 				item.value = v;	
 				})
@@ -48,7 +48,7 @@ fml.define('weave/html',['weave/fn'],function(require){
 		attr : function(attrName , attrVal){
 			if (fn.is_object(attrName)) 	attrVal = false;
 				
-			if (undefined === attrVal ) return this.stack.length ? this.stack[0].getAttribute(attrName) : '';
+			if (undefined === attrVal ) return this.length ? this[0].getAttribute(attrName) : '';
 			return this.each(function(item){
 				if (false === attrVal) {
 					fn.each(attrName , function(_attrVal, _attrName){
@@ -68,7 +68,7 @@ fml.define('weave/html',['weave/fn'],function(require){
 			return this.offset('height');		
 			},
 		pos : function(){
-			var elem = this.stack[0];
+			var elem = this[0];
 			if (!elem) return {};
 			if(!elem.getBoundingClientRect){
 				  var x_ = y_ = 0;
@@ -87,7 +87,7 @@ fml.define('weave/html',['weave/fn'],function(require){
 			  }
 			},
 		offset : function(key ){
-			var elem = this.stack[0];
+			var elem = this[0];
 			if (key)  return elem ? null : elem[ {'width':'offsetWidth' , 'height':'offsetHeight'}[key] ];
 			if (!elem ) return {};	
 			var ret = {
@@ -100,8 +100,8 @@ fml.define('weave/html',['weave/fn'],function(require){
 		css : function(styleName , styleVal , overRide){
 			if (fn.is_object(styleName)) 	styleVal = false;
 			if (undefined === styleVal) {
-				if (!this.stack.length) return '';
-				var elem = this.stack[0];
+				if (!this.length) return '';
+				var elem = this[0];
 				return elem.currentStyle ? 
 				   elem.currentStyle[styleName]
 				   :window.getComputedStyle(elem,null).getPropertyValue(styleName);
@@ -123,14 +123,14 @@ fml.define('weave/html',['weave/fn'],function(require){
 			
 			},
 		html : function(v){
-			if (!v) return this.stack.length ? this.stack[0].innerHTML : '';
+			if (!v) return this.length ? this[0].innerHTML : '';
 			return this.each(function(item){
 				item.innerHTML = v;	
 				})
 			},
 		remove : function(){
-			if (!this.stack.length ) return;
-			fn.reach(this.stack , function(item){
+			if (!this.length ) return;
+			fn.reach(this , function(item){
 					item.parentNode.removeChild(item) ;	
 				})
 			},
