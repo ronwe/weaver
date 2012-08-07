@@ -124,7 +124,17 @@ fml.define('weave/query',['weave/fn'],function(require , exports){
 			if (fn.is_array(col) ){
 				///TODOconsole.log('byclass todo', col);
 			}else{
-				element = col.getElementsByClassName(cls[1]);
+				if (document.getElementsByClassName)
+					element = col.getElementsByClassName(cls[1]);
+				else {
+					cls[1] = (' ' + cls[1] + ' ').toLowerCase()
+					var nodes = col.getElementsByTagName('*')
+					element = []
+					for (var i = 0 , j = nodes.length;i < j ; i++ ){
+						if ((' ' + nodes[i].className + ' ' ).toLowerCase().indexOf(cls[1]) > -1)	
+							element.push(nodes[i])
+						}
+					}
 			}
 		}else{
 			//byClassName byTagName
